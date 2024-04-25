@@ -17,11 +17,19 @@ async function login(request, response, next) {
       email,
       password
     );
-
-    if (!loginSuccess) {
+    let attempts = 1;
+    while (!loginSuccess < 5) {
       throw errorResponder(
         errorTypes.INVALID_CREDENTIALS,
         'Wrong email or password'
+      );
+      attempts += 1;
+    }
+
+    if (attempts == 5) {
+      throw errorResponder(
+        errorTypes.FORBIDDEN,
+        'Too many failed login attempts'
       );
     }
 
