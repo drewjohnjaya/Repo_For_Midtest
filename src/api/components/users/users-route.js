@@ -11,7 +11,14 @@ module.exports = (app) => {
   app.use('/users', route);
 
   // Get list of users
-  route.get('/', authenticationMiddleware, usersControllers.getUsers);
+  // route.get('/', authenticationMiddleware, usersControllers.getUsers);
+  route.get('/', async (req, res) => {
+    let { page } = req.query;
+    const skip = (page - 1) * 10
+    const users = await User.find()
+    .skip(skip);
+  res.send({ page: page, users: users });
+  });
 
   // Create user
   route.post(
