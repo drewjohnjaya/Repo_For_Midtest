@@ -1,5 +1,6 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const authenticationServices = require('./authentication-service');
+const rateLimit = require(express-rate-limit);
 
 /**
  * Handle login request
@@ -24,6 +25,17 @@ async function login(request, response, next) {
         'Wrong email or password'
       );
     }
+
+    if (!loginSuccess > 0) {
+    const loginAttemptsLimit = rateLimit({
+      windowMs: 30 * 60 * 1000, // 30 minutes
+      max: 5, // limit for each IP per window
+    });
+      throw errorResponder(
+        errorTypes.FORBIDDEN,
+        'Too many failed login attempts'
+      );
+    }
     
     return response.status(200).json(loginSuccess);
   } catch (error) {
@@ -33,4 +45,5 @@ async function login(request, response, next) {
 
 module.exports = {
   login,
+  loginAttemptsLimit,
 };
