@@ -11,10 +11,12 @@ const { User } = require('../../../models');
  */
 async function getUsers(request, response, next) {
   try {
-    let { page_number, page_size } = request.query;
+    let { page_number, page_size, sort, asc } = request.query;
     const skip = (page_number - 1) * 10;
+    if (!page_number) page_number = 1;
+    if (!page_size) page_size = 10;
     // const users = await usersService.getUsers();
-    const users = await User.find().skip(skip).limit(page_size).search().sort();
+    const users = await User.find().sort({[sort]: asc}).skip(skip).limit(page_size);
     return response.status(200).json(users);
   } catch (error) {
     return next(error);
