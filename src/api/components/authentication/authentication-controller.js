@@ -1,5 +1,6 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const authenticationServices = require('./authentication-service');
+const ExpressBrute = require('express-brute');
 
 /**
  * Handle login request
@@ -22,6 +23,24 @@ async function login(request, response, next) {
       throw errorResponder(
         errorTypes.INVALID_CREDENTIALS,
         'Wrong email or password'
+      );
+    }
+    
+    if (!loginSuccess == 5){
+      let userBruteForce = new ExpressBrute(store, {
+        freeRetries: 5,
+        minWait: 30 * 60 * 1000,
+        maxWait: 60 * 60 * 1000,
+      });
+      userBruteForce.prevent, 
+      function (request, response, next) {
+        request.brute.reset(function () {
+          response.redirect('/');
+        })
+      }
+      throw errorResponder(
+        errorTypes.FORBIDDEN,
+        'Too many failed login attempts'
       );
     }
 /*
