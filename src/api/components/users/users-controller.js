@@ -1,6 +1,7 @@
 const usersService = require('./users-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const { User } = require('../../../models');
+const { email } = require('../../../models/users-schema');
 
 /**
  * Handle get list of users request
@@ -11,13 +12,46 @@ const { User } = require('../../../models');
  */
 async function getUsers(request, response, next) {
   try {
-    let { page_number, page_size, sort, asc } = request.query;
-    const skip = (page_number - 1) * 10;
+    const page_number = parseInt(request.query.page_number) - 1 || 0;
+    const page_size = parseInt(request.query.page_size) || 10;
+    const search = request.query.search || "";
+    let sort = request.query.sort || "email";
+
+    let sorted = {};
+    if (sort[1]) {
+      sorted[sort[0]] = sort[1];
+    }
+    else {
+      sorted[sort[0]] = "asc";
+    }
+
+    const users = await User.find({ email: { $regex: search, $options: "i"} })
+    .sort(sorted).skip(page_number * page_size).limit(page_size);
+
+    const count = await User.countDocuments({
+      email: { $regex: search, $options: "i" },
+    });
+
+    const response = {
+      page_number: page_number + 1,
+      page_size,
+      count,
+      total_pages,
+      has_previous_page,
+      has_next_page,
+      data: users,
+    };
+    
+    /*
+    let { page_number, page_size, sort, desc } = request.query;
     if (!page_number) page_number = 1;
     if (!page_size) page_size = 10;
+
+    const skip = (page_number - 1) * 10;
+    */
     // const users = await usersService.getUsers();
-    const users = await User.find().sort({[sort]: asc}).skip(skip).limit(page_size);
-    return response.status(200).json(users);
+    // const users = await User.find().sort({ [sort]: desc }).skip(skip).limit(page_size);
+    return response.status(200).json(response);
   } catch (error) {
     return next(error);
   }
