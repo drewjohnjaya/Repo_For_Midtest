@@ -12,8 +12,10 @@ const { email } = require('../../../models/users-schema');
  */
 async function getUsers(request, response, next) {
   try {
-    const search = request.query.search || "";
-    let { page_number, page_size, sort } = request.query;
+    let { page_number, page_size, sort, search } = request.query;
+    request.query.search ? (search = request.query.search.split(':')) : (search = [search]);
+    let searched = ({email:{$regex:search, $options: "i"}});
+
     request.query.sort ? (sort = request.query.sort.split(':')) : (sort = [sort]);
     let sorted = {};
     if (sort[1]) {
@@ -24,8 +26,7 @@ async function getUsers(request, response, next) {
     }
     const skip = (page_number - 1) * 10; 
     // const users = await usersService.getUsers();
-    const users = await User.find({email:{$regex:search, $options: "i"}}).sort(sorted).skip(skip).limit(page_size);
-    //const total = await User.countDocuments({email:{$regex:search, $options: "i"},});
+    const users = await User.find({email:{$regex: searched, $options: 'i'}}).sort(sorted).skip(page_number*page_size).limit(page_size);
     return response.status(200).json(users);
   } catch (error) {
     return next(error);
