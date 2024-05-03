@@ -25,7 +25,7 @@ async function login(request, response, next) {
         'Wrong email or password'
       );
     }
-    
+/*    
     if (!loginSuccess == 5){
       let userBruteForce = new ExpressBrute(store, {
         freeRetries: 5,
@@ -43,7 +43,7 @@ async function login(request, response, next) {
         'Too many failed login attempts'
       );
     }
-/*
+
     if (!loginSuccess > 0) {
     const loginAttemptsLimit = rateLimit({
       windowMs: 30 * 60 * 1000, // 30 minutes
