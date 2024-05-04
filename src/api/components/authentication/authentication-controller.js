@@ -1,6 +1,6 @@
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const authenticationServices = require('./authentication-service');
-const ExpressBrute = require('express-brute');
+const rateLimit = require("express-rate-limit");
 
 /**
  * Handle login request
@@ -25,44 +25,26 @@ async function login(request, response, next) {
         'Wrong email or password'
       );
     }
-/*    
-    if (!loginSuccess == 5){
-      let userBruteForce = new ExpressBrute(store, {
-        freeRetries: 5,
-        minWait: 30 * 60 * 1000,
-        maxWait: 60 * 60 * 1000,
-      });
-      userBruteForce.prevent, 
-      function (request, response, next) {
-        request.brute.reset(function () {
-          response.redirect('/');
-        })
-      }
-      throw errorResponder(
-        errorTypes.FORBIDDEN,
-        'Too many failed login attempts'
-      );
-    }
 
-    if (!loginSuccess > 0) {
-    const loginAttemptsLimit = rateLimit({
-      windowMs: 30 * 60 * 1000, // 30 minutes
-      limit: 5, // limit for each IP per window
-    });
-      throw errorResponder(
-        errorTypes.FORBIDDEN,
-        'Too many failed login attempts'
-      );
-    }
-
-    app.use(loginAttemptsLimit)
-  */  
     return response.status(200).json(loginSuccess);
   } catch (error) {
     return next(error);
   }
 }
 
+const limited = rateLimit({
+  windowMs: 30 * 60 * 1000, // 30 minutes
+  limit: 5, // Limit each IP to 5 requests per `window` (here, per 30 minutes).
+  standardHeaders: true, // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  message: errorResponder(
+    errorTypes.FORBIDDEN,
+    'Too many failed login attempts'
+   ), // message about error
+  statusCode: 403, // forbidden status code
+});
+
 module.exports = {
   login,
+  limited
 };
