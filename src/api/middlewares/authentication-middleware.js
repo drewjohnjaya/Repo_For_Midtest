@@ -3,7 +3,6 @@ const passportJWT = require('passport-jwt');
 
 const config = require('../../core/config');
 const { User } = require('../../models');
-const { Item } = require('../../models');
 
 // Authenticate user based on the JWT token
 passport.use(
@@ -20,19 +19,4 @@ passport.use(
   )
 );
 
-// Authenticate item based on the JWT token
-passport.use(
-  'item',
-  new passportJWT.Strategy(
-    {
-      jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-      secretOrKey: config.secret.jwt,
-    },
-    async (payload, done) => {
-      const item = await Item.findOne({ id: payload.item_id });
-      return item ? done(null, item) : done(null, false);
-    }
-  )
-);
-
-module.exports = passport.authenticate('user', 'item', { session: false });
+module.exports = passport.authenticate('user', { session: false });

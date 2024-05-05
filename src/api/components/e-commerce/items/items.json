@@ -1,0 +1,241 @@
+[
+  {
+    "name": "X Computer",
+    "category": "Electronic",
+    "price": "5000000",
+    "stock": "142",
+    "available": "true"
+  },
+
+  {
+    "name": "Y Noodle",
+    "category": "Food",
+    "price": "10000",
+    "stock": "123",
+    "available": "true"
+  },
+
+  {
+    "name": "Z PSP",
+    "category": "Electronic",
+    "price": "3000000",
+    "stock": "46",
+    "available": "true"
+  },
+
+  {
+    "name": "Ultra Lemon Juice",
+    "category": "Beverage",
+    "price": "5000",
+    "stock": "57",
+    "available": "true"
+  },
+
+  {
+    "name": "Super Green Tea",
+    "category": "Beverage",
+    "price": "7580",
+    "stock": "45",
+    "available": "true"
+  },
+
+  {
+    "name": "Hoho Candy",
+    "category": "Food",
+    "price": "3020",
+    "stock": "36",
+    "available": "true"
+  },
+
+  {
+    "name": "B Chair",
+    "category": "Furniture",
+    "price": "382942",
+    "stock": "53",
+    "available": "true"
+  },
+
+  {
+    "name": "Cool Charger",
+    "category": "Electronic",
+    "price": "97432",
+    "stock": "274",
+    "available": "false"
+  },
+
+  {
+    "name": "Good Table",
+    "category": "Furniture",
+    "price": "7324210",
+    "stock": "23",
+    "available": "true"
+  },
+
+  {
+    "name": "Quantumaniax",
+    "category": "Book",
+    "price": "50000",
+    "stock": "62",
+    "available": "false"
+  },
+
+  {
+    "name": "jPhone 11",
+    "category": "Electronic",
+    "price": "4300500",
+    "stock": "51",
+    "available": "false"
+  },
+
+  {
+    "name": "Yo Shirt",
+    "category": "Clothes",
+    "price": "74023",
+    "stock": "73",
+    "available": "false"
+  },
+
+  {
+    "name": "Fast Fan",
+    "category": "Electronic",
+    "price": "3435214",
+    "stock": "83",
+    "available": "true"
+  },
+
+  {
+    "name": "O Spinner",
+    "category": "Toys",
+    "price": "92103",
+    "stock": "713",
+    "available": "false"
+  },
+
+  {
+    "name": "kPhone 16",
+    "category": "Electronic",
+    "price": "5585326",
+    "stock": "92",
+    "available": "true"
+  },
+
+  {
+    "name": "Somi",
+    "category": "Electronic",
+    "price": "5300000",
+    "stock": "42",
+    "available": "true"
+  },
+
+  {
+    "name": "Dorgun",
+    "category": "Toys",
+    "price": "342152",
+    "stock": "842",
+    "available": "false"
+  },
+
+  {
+    "name": "FireWater Gun",
+    "category": "Toys",
+    "price": "186424",
+    "stock": "462",
+    "available": "true"
+  },
+
+  {
+    "name": "Uncertainty Cat",
+    "category": "Book",
+    "price": "82425",
+    "stock": "932",
+    "available": "false"
+  },
+
+  {
+    "name": "W Laptop",
+    "category": "Electronic",
+    "price": "27321103",
+    "stock": "3",
+    "available": "true"
+  },
+
+  {
+    "name": "Bubble Gun",
+    "category": "Toys",
+    "price": "355435",
+    "stock": "963",
+    "available": "true"
+  },
+
+  {
+    "name": "Iron Mask",
+    "category": "Toys",
+    "price": "24322",
+    "stock": "63",
+    "available": "false"
+  },
+
+  {
+    "name": "Iron Mask 2",
+    "category": "Toys",
+    "price": "62521",
+    "stock": "34",
+    "available": "false"
+  },
+
+  {
+    "name": "Iron Mask 3",
+    "category": "Toys",
+    "price": "63522",
+    "stock": "26",
+    "available": "true"
+  },
+
+  {
+    "name": "Megatronic USB",
+    "category": "Electronic",
+    "price": "927423",
+    "stock": "292",
+    "available": "true"
+  },
+
+  {
+    "name": "How To Use Wubuntu",
+    "category": "Book",
+    "price": "291832",
+    "stock": "146",
+    "available": "false"
+  },
+
+  {
+    "name": "Optimusic Headphone",
+    "category": "Electronic",
+    "price": "749282",
+    "stock": "282",
+    "available": "true"
+  },
+
+  {
+    "name": "Learn Backend Using BaliScript",
+    "category": "Book",
+    "price": "274201",
+    "stock": "492",
+    "available": "false"
+  },
+
+  {
+    "name": "Bumblebeep Speaker",
+    "category": "Electronic",
+    "price": "598270",
+    "stock": "682",
+    "available": "true"
+  },
+
+  {
+    "name": "Stark Cupboard",
+    "category": "Furniture",
+    "price": "5829323",
+    "stock": "932",
+    "available": "true"
+  }
+]

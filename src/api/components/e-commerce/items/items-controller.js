@@ -1,6 +1,7 @@
 const itemsService = require('./items-service');
-const { errorResponder, errorTypes } = require('../../../core/errors');
-const { Item } = require('../../../models');
+const { errorResponder, errorTypes } = require('../../../../core/errors');
+const { Item } = require('../../../../models');
+const items_in_json = require('./items.json');
 
 /**
  * Handle get list of items request
@@ -12,10 +13,8 @@ const { Item } = require('../../../models');
 async function getItems(request, response, next) {
   try {
     const search = request.query.search || "";
-    //let sort = request.query.sort;
+
     let { page_size, page_number, sort } = request.query;
-    //request.query.search ? (search = request.query.search.split(':')) : (search = [search]);
-    //let searched = ({email:{$regex:search, $options: "i"}});
 
     request.query.sort ? (sort = request.query.sort.split(':')) : (sort = [sort]);
     let sortBy = {};
@@ -26,15 +25,15 @@ async function getItems(request, response, next) {
       sortBy[sort[0]] = "asc";
     }
     const skip = (page_number - 1) * 10;
-    // const users = await usersService.getUsers();
+    
     const items = await Item.find(
       {
       $or:[
-      {email:{$regex: '.*'+search+'.*',$options:'i'}},
-      {name:{$regex:'.*'+search+'.*',$options:'i'}}
+      {name:{$regex: '.*'+search+'.*',$options:'i'}},
+      {category:{$regex:'.*'+search+'.*',$options:'i'}},
       ]
       })
-      //.sort(sortBy)
+      .sort(sortBy)
       .skip(skip)
       .limit(page_size);
     return response.status(200).json(items);
@@ -147,6 +146,21 @@ async function deleteItem(request, response, next) {
     return next(error);
   }
 }
+/*
+const insertItems = async () => {
+  try {
+    const jsonItems = await Item.insertMany(items_in_json);
+    return Promise.resolve(jsonItems);
+  }
+  catch (error) {
+    return Promise.reject(error)
+  }
+};
+
+insertItems()
+.then((jsonItems) => console.log(jsonItems))
+.catch((error) => console.log(error))
+*/
 
 module.exports = {
   getItems,

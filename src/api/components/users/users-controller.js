@@ -12,33 +12,34 @@ const { email } = require('../../../models/users-schema');
  */
 async function getUsers(request, response, next) {
   try {
-    const search = request.query.search || "";
-    //let sort = request.query.sort;
-    let { page_size, page_number, sort } = request.query;
-    //request.query.search ? (search = request.query.search.split(':')) : (search = [search]);
-    //let searched = ({email:{$regex:search, $options: "i"}});
+    let { page_size, page_number, sort, asc} = request.query;
 
-    request.query.sort ? (sort = request.query.sort.split(':')) : (sort = [sort]);
-    let sortBy = {};
-    if (sort[1]) {
-      sortBy[sort[0]] = sort[1];
-    }
-    else {
-      sortBy[sort[0]] = "asc";
-    }
+    const search = request.query.search || "";
+
     const skip = (page_number - 1) * 10;
-    // const users = await usersService.getUsers();
-    const users = await User.find(
+
+    const data = await User.find(
       {
       $or:[
       {email:{$regex: '.*'+search+'.*',$options:'i'}},
       {name:{$regex:'.*'+search+'.*',$options:'i'}}
       ]
       })
-      //.sort(sortBy)
+      .sort({ [sort]: asc})
       .skip(skip)
       .limit(page_size);
-    return response.status(200).json(users);
+
+    return response
+    .status(200)
+    .json({
+      page_number: page_number,
+      page_size: page_size,
+      count: 2,
+      total_pages: 4,
+      has_previous_page: false,
+      has_next_page: true,
+      data
+    });
   } catch (error) {
     return next(error);
   }
