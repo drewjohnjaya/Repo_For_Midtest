@@ -12,21 +12,32 @@ const { email } = require('../../../models/users-schema');
  */
 async function getUsers(request, response, next) {
   try {
-    let { page_number, page_size, sort, search } = request.query;
-    request.query.search ? (search = request.query.search.split(':')) : (search = [search]);
-    let searched = ({email:{$regex:search, $options: "i"}});
+    const search = request.query.search || "";
+    //let sort = request.query.sort;
+    let { page_size, page_number, sort } = request.query;
+    //request.query.search ? (search = request.query.search.split(':')) : (search = [search]);
+    //let searched = ({email:{$regex:search, $options: "i"}});
 
     request.query.sort ? (sort = request.query.sort.split(':')) : (sort = [sort]);
-    let sorted = {};
+    let sortBy = {};
     if (sort[1]) {
-      sorted[sort[0]] = sort[1];
+      sortBy[sort[0]] = sort[1];
     }
     else {
-      sorted[sort[0]] = "asc";
+      sortBy[sort[0]] = "asc";
     }
-    const skip = (page_number - 1) * 10; 
+    const skip = (page_number - 1) * 10;
     // const users = await usersService.getUsers();
-    const users = await User.find({email:{$regex: searched, $options: 'i'}}).sort(sorted).skip(page_number*page_size).limit(page_size);
+    const users = await User.find(
+      {
+      $or:[
+      {email:{$regex: '.*'+search+'.*',$options:'i'}},
+      {name:{$regex:'.*'+search+'.*',$options:'i'}}
+      ]
+      })
+      //.sort(sortBy)
+      .skip(skip)
+      .limit(page_size);
     return response.status(200).json(users);
   } catch (error) {
     return next(error);
