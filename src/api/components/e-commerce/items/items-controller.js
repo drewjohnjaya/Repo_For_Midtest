@@ -106,7 +106,7 @@ async function updateItem(request, response, next) {
     const category = request.body.category;
     const price = request.body.price;
     const stock = request.body.stock;
-    const available = request.body.stock;
+    const available = request.body.available;
 
     const success = await itemsService.updateItem(id, name, category, price, stock, available);
     if (!success) {
@@ -146,7 +146,7 @@ async function deleteItem(request, response, next) {
     return next(error);
   }
 }
-/*
+/* variable to store function that insert data from json file to the database
 const insertItems = async () => {
   try {
     const jsonItems = await Item.insertMany(items_in_json);

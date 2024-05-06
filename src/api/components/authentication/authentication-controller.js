@@ -31,7 +31,7 @@ async function login(request, response, next) {
     return next(error);
   }
 }
-
+// variable to store rateLimit function
 const limited = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 minutes
   limit: 5, // Limit each IP to 5 requests per `window` (here, per 30 minutes).
@@ -39,8 +39,8 @@ const limited = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
   message: errorResponder(
     errorTypes.FORBIDDEN,
-    'Too many failed login attempts'
-   ), // message about error
+    'Too many failed login attempts' // message about error
+   ), 
   statusCode: 403, // forbidden status code
 });
 

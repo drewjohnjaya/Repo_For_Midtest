@@ -41,8 +41,8 @@ async function getItem(id) {
     name: item.name,
     category: item.category,
     price: item.price,
-    stock: item.price,
-    available: item.price,
+    stock: item.stock,
+    available: item.available,
   };
 }
 
@@ -94,7 +94,7 @@ async function updateItem(id, name, category, price, stock, available) {
 }
 
 /**
- * Delete item
+ * Delete an item
  * @param {string} id - Item ID
  * @returns {boolean}
  */

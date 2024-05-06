@@ -11,7 +11,7 @@ const { email } = require('../../../models/users-schema');
  * @returns {object} Response object or pass an error to the next route
  */
 async function getUsers(request, response, next) {
-  try {
+  try { // queries after ?
     let { page_size, page_number, sort, asc} = request.query;
 
     const search = request.query.search || "";
